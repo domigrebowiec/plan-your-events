@@ -6,12 +6,13 @@ from django.utils import timezone
 from .forms import EventForm
 from .models import Event, EventParticipant, Person
 #laluna123
-def index(request):
+
+def events(request):
   all_events = Event.objects.order_by('-start_time')
   context = {
     'all_events': all_events,
   }
-  return render(request, 'events/index.html', context)
+  return render(request, 'events/events.html', context)
 
 def addnew(request):
   if request.method == 'POST':

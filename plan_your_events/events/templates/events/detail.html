@@ -1,20 +1,23 @@
-<h1>{{ event.name }}</h1>
-<h3>{{ event.start_time }}</h3>
-<h3>{{ event.end_time }}</h3>
-<h3>{{ event.description }}</h3>
-<h3>Event participants:</h3>
-{% if participants %}
-  {% for p in participants %}
-    <p>{{p.person.first_name}} {{ p.person.last_name}} {{ p.person.email}}</p> 
-  {% endfor %}
-{% endif %}
+{% extends 'events/index.html' %}
+{% block content %}
+  <h1>{{ event.name }}</h1>
+  <h3>{{ event.start_time }}</h3>
+  <h3>{{ event.end_time }}</h3>
+  <h3>{{ event.description }}</h3>
+  <h3>Event participants:</h3>
+  {% if participants %}
+    {% for p in participants %}
+      <p>{{p.person.first_name}} {{ p.person.last_name}} {{ p.person.email}}</p> 
+    {% endfor %}
+  {% endif %}
 
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+  {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-<form action="{% url 'events:signup' event.id %}" method="post">
-  {% csrf_token %}
-  First name: <input type="text" name="first_name"/>
-  Last name: <input type="text" name="last_name"/>
-  Email: <input type="text" name="email"/>
-  <input type="submit" value="Signup"/>
-</form>
+  <form action="{% url 'events:signup' event.id %}" method="post">
+    {% csrf_token %}
+    First name: <input type="text" name="first_name"/>
+    Last name: <input type="text" name="last_name"/>
+    Email: <input type="text" name="email"/>
+    <input type="submit" value="Signup"/>
+  </form>
+{% endblock %}
