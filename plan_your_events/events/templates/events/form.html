@@ -1,7 +1,7 @@
 {% extends 'events/index.html' %}
 {% block content %}
 
-  <form action="{% url 'events:addnew' %}" method="post">
+  <form id="event-form" action="{% url 'events:addnew' %}" method="post">
     {% csrf_token %}
     <!--Event name: <input type="text" name="name"/>
     Start time: <input type="date" name="start_time"/>
@@ -16,7 +16,7 @@
         {% endif %}
       </div>
     {% endfor %}
-    <input type="submit" value="Add"/>
+    <input id="event-form-submit" type="submit" class="btn btn-warning" value="Add"/>
   </form>
 
 {% endblock %}
