@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 class Address(models.Model):
   street = models.CharField(max_length=50)
@@ -20,16 +21,17 @@ class Person(models.Model):
     return self.email
 
 class Event(models.Model):
-  name = models.CharField(max_length=50)
-  start_time = models.DateTimeField('start time')
-  end_time = models.DateTimeField('end time')
+  name = models.CharField(max_length=50, blank=False)
+  start_time = models.DateTimeField('start time', blank=False)
+  end_time = models.DateTimeField('end time', blank=False)
   #place = models.ForeignKey(Place)
-  create_date = models.DateTimeField('create date')
-  mod_date = models.DateTimeField('modification date')
+  description = models.TextField(default='', blank=True)
+  create_date = models.DateTimeField('create date', default=timezone.now)
+  mod_date = models.DateTimeField('modification date', default=timezone.now)
   def __str__(self):
     return self.name
 
 class EventParticipant(models.Model):
-  event = models.ForeignKey(Event)
-  person = models.ForeignKey(Person)
-  create_date = models.DateTimeField('create date')
+  event = models.ForeignKey(Event, on_delete=models.CASCADE)
+  person = models.ForeignKey(Person, on_delete=models.CASCADE)
+  create_date = models.DateTimeField('create date', default=timezone.now)
