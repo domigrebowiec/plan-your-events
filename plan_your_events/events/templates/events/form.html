@@ -1,7 +1,8 @@
 <form action="{% url 'events:addnew' %}" method="post">
   {% csrf_token %}
-  Event name: <input type="text" name="name"/>
-  Start date: <input type="date" name="start_date"/>
-  End date: <input type="date" name="end_date"/>
+  <!--Event name: <input type="text" name="name"/>
+  Start time: <input type="date" name="start_time"/>
+  End time: <input type="date" name="end_time"/-->
+  {{form}}
   <input type="submit" value="Add"/>
 </form>

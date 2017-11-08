@@ -3,29 +3,33 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 
+from .forms import EventForm
 from .models import Event, EventParticipant, Person
 #laluna123
 def index(request):
-  all_events = Event.objects.order_by('-start_date')
+  all_events = Event.objects.order_by('-start_time')
   context = {
     'all_events': all_events,
   }
   return render(request, 'events/index.html', context)
 
-def form(request):
-  return render(request, 'events/form.html', {})
-
 def addnew(request):
-  try:
-    event = Event.objects.get(name=request.POST['name'])
-  except Event.DoesNotExist:
-    event = Event(name=request.POST['name'], 
-      start_date=request.POST['start_date'], 
-      end_date=request.POST['end_date'], 
-      create_date=timezone.now(), mod_date=timezone.now())
-    event.save()
-  all_events = Event.objects.order_by('-start_date')
-  return redirect('events:index')
+  if request.method == 'POST':
+    form = EventForm(request.POST)
+    if form.is_valid():
+      try:
+        event = Event.objects.get(name=form.cleaned_data['name'])
+      except Event.DoesNotExist:
+        event = Event(name=form.cleaned_data['name'], 
+          start_time=form.cleaned_data['start_time'], 
+          end_time=form.cleaned_data['end_time'], 
+          create_date=timezone.now(), mod_date=timezone.now())
+        event.save()
+      all_events = Event.objects.order_by('-start_time')
+      return redirect('events:index')
+  else:
+    form = EventForm()
+  return render(request, 'events/form.html', {'form': form})
 
 def detail(request, event_id):
   event = get_object_or_404(Event, pk=event_id)

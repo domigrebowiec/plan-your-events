@@ -21,8 +21,8 @@ class Person(models.Model):
 
 class Event(models.Model):
   name = models.CharField(max_length=50)
-  start_date = models.DateTimeField('start date')
-  end_date = models.DateTimeField('end date')
+  start_time = models.DateTimeField('start time')
+  end_time = models.DateTimeField('end time')
   #place = models.ForeignKey(Place)
   create_date = models.DateTimeField('create date')
   mod_date = models.DateTimeField('modification date')
