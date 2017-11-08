@@ -27,7 +27,7 @@ def addnew(request):
           description=form.cleaned_data['description'])
         event.save()
       all_events = Event.objects.order_by('-start_time')
-      return redirect('events:index')
+      return redirect('events:events')
   else:
     form = EventForm()
   return render(request, 'events/form.html', {'form': form})

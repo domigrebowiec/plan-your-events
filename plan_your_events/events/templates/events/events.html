@@ -1,13 +1,25 @@
 {% extends 'events/index.html' %}
-
+{% load static %}
 {% block content %}
   {% if all_events %}
-    <ul>
+    <div class="row">
     {% for event in all_events %}
-        <li><a href="{% url 'events:detail' event.id %}">{{event.name}}</a></li>
+      <div class="col-sm-6">
+        <div class="card" style="max-width: 30rem; max-height:100rem">
+          <div class="card-header">{{event.start_time}}</div>
+          <div class="card-body">
+            <img class="card-img-top" src="{% static "events/bike.jpg" %}" alt="Card image cap">
+            <h4 class="card-title">{{event.name}}</h4>
+            <p class="card-text">{{event.description}}</p>
+            <a href="{% url 'events:detail' event.id %}" class="btn btn-warning">Details</a>
+          </div>
+        </div>
+      </div>
     {% endfor %}
-    </ul>
+    </div>
   {% else %}
     <p>No events found.</p>
   {% endif %}
 {% endblock %}
+
+
