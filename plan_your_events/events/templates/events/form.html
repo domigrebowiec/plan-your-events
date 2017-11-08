@@ -1,12 +1,8 @@
 {% extends 'events/index.html' %}
 {% block content %}
 
-  <form id="event-form" action="{% url 'events:addnew' %}" method="post">
+  <form id="my-form" action="{% url 'events:addnew' %}" method="post">
     {% csrf_token %}
-    <!--Event name: <input type="text" name="name"/>
-    Start time: <input type="date" name="start_time"/>
-    End time: <input type="date" name="end_time"/-->
-
     {% for field in form %}
       <div class="form-group">
         {{ field.errors }}
@@ -16,7 +12,7 @@
         {% endif %}
       </div>
     {% endfor %}
-    <input id="event-form-submit" type="submit" class="btn btn-warning" value="Add"/>
+    <input id="my-form-submit" type="submit" class="btn btn-warning" value="Add"/>
   </form>
 
 {% endblock %}

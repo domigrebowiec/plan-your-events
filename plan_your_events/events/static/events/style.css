@@ -18,16 +18,16 @@ div.card {
 div.card-header {
   background-color: #fff5af;
 }
-form#event-form {
+form#my-form {
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
   padding: 1rem;
   margin-top: 2rem;
 }
-form#event-form label{
+form#my-form label{
   width: 6rem;
 }
-form#event-form input, textarea{
+form#my-form input, textarea{
   width: 30rem;
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
