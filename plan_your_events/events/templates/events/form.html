@@ -6,7 +6,16 @@
     <!--Event name: <input type="text" name="name"/>
     Start time: <input type="date" name="start_time"/>
     End time: <input type="date" name="end_time"/-->
-    {{form.as_table}}
+
+    {% for field in form %}
+      <div class="form-group">
+        {{ field.errors }}
+        {{ field.label_tag }} {{ field }}
+        {% if field.help_text %}
+        <p class="help">{{ field.help_text|safe }}</p>
+        {% endif %}
+      </div>
+    {% endfor %}
     <input type="submit" value="Add"/>
   </form>
 
