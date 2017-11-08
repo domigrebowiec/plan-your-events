@@ -23,7 +23,7 @@ def addnew(request):
         event = Event(name=form.cleaned_data['name'], 
           start_time=form.cleaned_data['start_time'], 
           end_time=form.cleaned_data['end_time'], 
-          create_date=timezone.now(), mod_date=timezone.now())
+          description=form.cleaned_data['description'])
         event.save()
       all_events = Event.objects.order_by('-start_time')
       return redirect('events:index')
@@ -47,6 +47,6 @@ def signup(request, event_id):
     person = Person(first_name=request.POST['first_name'], 
       last_name=request.POST['last_name'], email = request.POST['email'])
     person.save()
-  participant = EventParticipant(event=event, person=person, create_date=timezone.now())
+  participant = EventParticipant(event=event, person=person)
   participant.save()
   return redirect('events:detail', event_id=event_id)
