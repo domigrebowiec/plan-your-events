@@ -19,9 +19,9 @@
     <form id="my-form" action="{% url 'events:signup' event.id %}" method="post">
       {% csrf_token %}
       <div class="form-group">You can singup for this event.</div>
-      <div class="form-group">First name: <input type="text" name="first_name"/></div>
-      <div class="form-group">Last name: <input type="text" name="last_name"/></div>
-      <div class="form-group">Email: <input type="text" name="email"/></div>
+      <div class="form-group"><label>First name: </label><input type="text" name="first_name"/></div>
+      <div class="form-group"><label>Last name: </label><input type="text" name="last_name"/></div>
+      <div class="form-group"><label>Email: </label><input type="text" name="email"/></div>
       <input id="my-form-submit" type="submit" class="btn btn-warning" value="Signup"/>
     </form>
   </div>

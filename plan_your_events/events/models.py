@@ -35,3 +35,5 @@ class EventParticipant(models.Model):
   event = models.ForeignKey(Event, on_delete=models.CASCADE)
   person = models.ForeignKey(Person, on_delete=models.CASCADE)
   create_date = models.DateTimeField('create date', default=timezone.now)
+  def __str__(self):
+    return self.event.name + " " + self.person.first_name
