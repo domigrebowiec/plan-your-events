@@ -7,21 +7,28 @@
     <img class="card-img-top" src="{% static "events/bike.jpg" %}" alt="Card image cap">
     <h4 class="card-title">{{event.name}}</h4>
     <p class="card-text">{{event.description}}</p>
-    {% if participants %}
     <div class="list-group">
       <div class="list-group-item list-group-item-action active">Event participants:</div>
+      {% if participants %}
       {% for p in participants %}
         <div class="list-group-item list-group-item-action">{{p.person.first_name}} {{ p.person.last_name}} {{ p.person.email}}</div> 
       {% endfor %}
+      {% endif %}
     </div>
-    {% endif %}
+    
 
     <form id="my-form" action="{% url 'events:signup' event.id %}" method="post">
       {% csrf_token %}
       <div class="form-group">You can singup for this event.</div>
-      <div class="form-group"><label>First name: </label><input type="text" name="first_name"/></div>
-      <div class="form-group"><label>Last name: </label><input type="text" name="last_name"/></div>
-      <div class="form-group"><label>Email: </label><input type="text" name="email"/></div>
+      {% for field in form %}
+        <div class="form-group">
+          {{ field.errors }}
+          {{ field.label_tag }} {{ field }}
+          {% if field.help_text %}
+          <p class="help">{{ field.help_text|safe }}</p>
+          {% endif %}
+        </div>
+      {% endfor %}
       <input id="my-form-submit" type="submit" class="btn btn-warning" value="Signup"/>
     </form>
   </div>

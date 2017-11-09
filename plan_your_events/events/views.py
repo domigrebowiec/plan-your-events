@@ -3,7 +3,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .forms import EventForm
+from .forms import EventForm, PersonForm
 from .models import Event, EventParticipant, Person
 #laluna123
 
@@ -32,22 +32,33 @@ def addnew(request):
     form = EventForm()
   return render(request, 'events/form.html', {'form': form})
 
-def detail(request, event_id):
+def detail(request, event_id, form=PersonForm()):
   event = get_object_or_404(Event, pk=event_id)
-  try:
-    participants = EventParticipant.objects.filter(event__id=event.id)
-  except EventParticipant.DoesNotExist:
-    participants = None
-  return render(request, 'events/detail.html', {'event': event, 'participants': participants})
+  #try:
+  participants = EventParticipant.objects.filter(event__id=event.id)
+  #except EventParticipant.DoesNotExist:
+    #participants = None
+  return render(request, 'events/detail.html', {'event': event, 'participants': participants, 'form': form})
 
 def signup(request, event_id):
   event = get_object_or_404(Event, pk=event_id)
-  try:
-    person = Person.objects.get(email=request.POST['email'])
-  except Person.DoesNotExist:
-    person = Person(first_name=request.POST['first_name'], 
-      last_name=request.POST['last_name'], email = request.POST['email'])
-    person.save()
-  participant = EventParticipant(event=event, person=person)
-  participant.save()
-  return redirect('events:detail', event_id=event_id)
+  if request.method == 'POST':
+    form = PersonForm(request.POST)
+    if form.is_valid():
+      try:
+        person = Person.objects.get(email=form.cleaned_data['email'])
+        event_p = EventParticipant.objects.get(event__id=event.id,person__id=person.id)
+        print('EventParticipant already exist')
+      except Person.DoesNotExist:
+        person = Person(first_name=form.cleaned_data['first_name'], 
+          last_name=form.cleaned_data['last_name'], email = form.cleaned_data['email'])
+        person.save()
+      except EventParticipant.DoesNotExist:
+        participant = EventParticipant(event=event, person=person)
+        participant.save()
+        print('EventParticipant saved')
+      return redirect('events:detail', event_id=event.id)
+  else:
+    form = PersonForm()
+  print('event_id', event_id)
+  return render(request, 'events/detail.html', {'event_id': event.id, 'form': form})
