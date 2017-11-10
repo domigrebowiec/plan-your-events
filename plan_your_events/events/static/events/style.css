@@ -7,7 +7,7 @@ a.nav-link {
   margin: 10px;
 }
 body {
-  background-color: white;
+  font-family: 'Montserrat', sans-serif;
 }
 nav {
   background-color: #fff5af;
@@ -17,6 +17,18 @@ div.card {
 }
 div.card-header {
   background-color: #fff5af;
+}
+div.calendar-card.card {
+  margin: 0;
+  margin-bottom: 0.30rem;
+}
+div.calendar-card.card-header {
+  background: #4286f4;
+  color: white;
+}
+div.calendar-card.card-body {
+  font-size: 48px;
+  padding: 0;
 }
 form#my-form {
   border: 1px solid rgba(0,0,0,.125);
@@ -32,8 +44,8 @@ form#my-form input, textarea{
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
 }
-div.container {
-  margin-top: 1rem;
+div.content.container {
+  background-color: white;
 }
 div.container div.alert.my-alert-error {
   color: #a94442;

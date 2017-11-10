@@ -5,11 +5,17 @@
     <div class="row">
     {% for event in all_events %}
       <div class="col-sm-6">
-        <div class="card" style="max-width: 30rem; max-height:100rem">
-          <div class="card-header">{{event.start_time|date:"j F Y, H:m"}}</div>
+        <div class="card text-center" style="max-width: 30rem; max-height:100rem">
+          <div class="card-header">
+            <h4 class="card-title">{{event.name}}</h4></div>
           <div class="card-body">
-            <img class="card-img-top" src="{% static "events/bike.jpg" %}" alt="Card image cap">
-            <h4 class="card-title">{{event.name}}</h4>
+            <div class="calendar-card card w-50 h-25 text-center mx-auto">
+              <div class="calendar-card card-header">{{event.start_time|date:"F Y"}}</div>
+              <div class="calendar-card card-body">
+                {{event.start_time|date:"j"}}
+              </div>
+            </div>
+            <!--img class="card-img-top" src="{% static "events/bike.jpg" %}" alt="Card image cap"-->
             <p class="card-text">{{event.description}}</p>
             <a href="{% url 'events:detail' event.id %}" class="btn btn-warning">Details</a>
           </div>
