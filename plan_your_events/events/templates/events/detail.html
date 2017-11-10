@@ -1,7 +1,7 @@
 {% extends 'events/index.html' %}
 {% load static %}
 {% block content %}
-<div class="card" style="width: 90%;">
+<div class="card" style="width: 100%;">
   <div class="card-header">Start: <b>{{event.start_time|date:"j F Y, H:m"}}</b><br/>End: <b>{{event.end_time|date:"j F Y, H:m"}}</b></div>
   <div class="card-body">
     <img class="card-img-top" src="{% static "events/bike.jpg" %}" alt="Card image cap">

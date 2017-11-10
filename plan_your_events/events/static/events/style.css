@@ -32,3 +32,11 @@ form#my-form input, textarea{
   border: 1px solid rgba(0,0,0,.125);
   border-radius: .25rem;
 }
+div.container {
+  margin-top: 1rem;
+}
+div.container div.alert.my-alert-error {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: #ebccd1;
+}
