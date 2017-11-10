@@ -1,11 +1,45 @@
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse
 from django.utils import timezone
 
-from .forms import EventForm, PersonForm
+from .forms import EventForm, LoginForm, PersonForm, RegistrationForm
 from .models import Event, EventParticipant, Person
 #laluna123
+
+def register(request):
+  form = RegistrationForm()
+  if request.method == 'POST':
+    form = RegistrationForm(request.POST)
+    if form.is_valid():
+      User.objects.create_user(username=form.cleaned_data['username'],
+                  password=form.cleaned_data['password2'],
+                  email=form.cleaned_data['email'])
+      return redirect('events:events')
+  return render(request, 'events/register.html', {'form':form})
+
+def login_view(request):
+  form = LoginForm()
+  error_message = ""
+  if request.method == 'POST':
+    form = LoginForm(request.POST)
+    if form.is_valid():
+      username = form.cleaned_data['username']
+      password = form.cleaned_data['password']
+      user = authenticate(username=username, password=password)
+      if user is not None:
+        login(request, user)
+        return redirect('events:events')
+      else:
+        error_message = "Error"
+  return render(request, 'events/login.html', {'form': form, 'error_message': error_message})
+
+def logout_view(request):
+  logout(request)
+  return redirect('events:events')
 
 def events(request):
   all_events = Event.objects.order_by('-start_time')
@@ -14,6 +48,7 @@ def events(request):
   }
   return render(request, 'events/events.html', context)
 
+#@login_required(login_url='/events/login/')
 def addnew(request):
   if request.method == 'POST':
     form = EventForm(request.POST)

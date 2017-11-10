@@ -1,0 +1,18 @@
+{% extends 'events/index.html' %}
+{% block content %}
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form id="my-form" action="{% url 'events:login_view' %}" method="post">
+  {% csrf_token %}
+  {% for field in form %}
+    <div class="form-group">
+      {{ field.errors }}
+      {{ field.label_tag }} {{ field }}
+      {% if field.help_text %}
+      <p class="help">{{ field.help_text|safe }}</p>
+      {% endif %}
+    </div>
+  {% endfor %}
+  <input id="my-form-submit" type="submit" class="btn btn-warning" value="Add"/>
+</form>
+
+{% endblock %}
