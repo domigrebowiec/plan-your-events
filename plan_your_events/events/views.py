@@ -1,8 +1,9 @@
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404, render, redirect
 
-from .forms import EventForm, PersonForm
-from .models import Event, EventParticipant, Person
+from .forms import EventForm
+from .models import Event, EventParticipant
 #laluna123
 
 def events(request):
@@ -26,38 +27,27 @@ def addnew(request):
           description=form.cleaned_data['description'])
         event.save()
       all_events = Event.objects.order_by('-start_time')
+      messages.success(request, 'You added new event.')
       return redirect('events:events')
   else:
     form = EventForm()
   return render(request, 'events/form.html', {'form': form})
 
-def detail(request, event_id, form=PersonForm()):
+def detail(request, event_id):
   event = get_object_or_404(Event, pk=event_id)
-  #try:
   participants = EventParticipant.objects.filter(event__id=event.id)
-  #except EventParticipant.DoesNotExist:
-    #participants = None
-  return render(request, 'events/detail.html', {'event': event, 'participants': participants, 'form': form})
+  return render(request, 'events/detail.html', {'event': event, 'participants': participants})
 
+@login_required(login_url='/accounts/login/')
 def signup(request, event_id):
   event = get_object_or_404(Event, pk=event_id)
-  if request.method == 'POST':
-    form = PersonForm(request.POST)
-    if form.is_valid():
-      try:
-        person = Person.objects.get(email=form.cleaned_data['email'])
-        event_p = EventParticipant.objects.get(event__id=event.id,person__id=person.id)
-        print('EventParticipant already exist')
-      except Person.DoesNotExist:
-        person = Person(first_name=form.cleaned_data['first_name'], 
-          last_name=form.cleaned_data['last_name'], email = form.cleaned_data['email'])
-        person.save()
-      except EventParticipant.DoesNotExist:
-        participant = EventParticipant(event=event, person=person)
-        participant.save()
-        print('EventParticipant saved')
-      return redirect('events:detail', event_id=event.id)
-  else:
-    form = PersonForm()
-  print('event_id', event_id)
-  return render(request, 'events/detail.html', {'event_id': event.id, 'form': form})
+  try:
+    event_p = EventParticipant.objects.get(event__id=event.id,user__id=request.user.id)
+    messages.error(request, 'You are already signup for this event!')
+    participants = EventParticipant.objects.filter(event__id=event.id)
+    return redirect('events:detail', event.id)
+  except EventParticipant.DoesNotExist:
+    participant = EventParticipant(event=event, user=request.user)
+    participant.save()
+    messages.success(request, 'You are successfully signup for this event.')
+  return redirect('events:detail', event.id)

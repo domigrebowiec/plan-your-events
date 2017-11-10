@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.utils import timezone
 
 class Address(models.Model):
@@ -11,14 +12,6 @@ class Address(models.Model):
 class Place(models.Model):
   name = models.CharField(max_length=50)
   address = models.ForeignKey(Address)
-
-class Person(models.Model):
-  first_name = models.CharField(max_length=50)
-  last_name = models.CharField(max_length=50)
-  email = models.CharField(max_length=50)
-  #address = models.ForeignKey(Address)
-  def __str__(self):
-    return self.email
 
 class Event(models.Model):
   name = models.CharField(max_length=50, blank=False)
@@ -33,7 +26,7 @@ class Event(models.Model):
 
 class EventParticipant(models.Model):
   event = models.ForeignKey(Event, on_delete=models.CASCADE)
-  person = models.ForeignKey(Person, on_delete=models.CASCADE)
+  user = models.ForeignKey(User)
   create_date = models.DateTimeField('create date', default=timezone.now)
   def __str__(self):
-    return self.event.name + " " + self.person.first_name
+    return self.event.name + " " + self.user.first_name

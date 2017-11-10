@@ -6,8 +6,3 @@ class EventForm(forms.Form):
   start_time = forms.DateTimeField(label='Start time', widget=forms.widgets.DateInput(attrs={'type': 'datetime-local'}))
   end_time = forms.DateTimeField(label='End time', widget=forms.widgets.DateInput(attrs={'type': 'datetime-local'}))
   description = forms.CharField(widget=forms.Textarea)
-
-class PersonForm(forms.Form):
-  first_name = forms.CharField(label=_('First name'))
-  last_name = forms.CharField(label=_('Last name'))
-  email = forms.EmailField()

@@ -11,7 +11,7 @@
       <div class="list-group-item list-group-item-action active">Event participants:</div>
       {% if participants %}
       {% for p in participants %}
-        <div class="list-group-item list-group-item-action">{{p.person.first_name}} {{ p.person.last_name}} {{ p.person.email}}</div> 
+        <div class="list-group-item list-group-item-action">{{p.user.first_name}} {{ p.user.last_name}} {{ p.user.email}}</div> 
       {% endfor %}
       {% endif %}
     </div>
@@ -19,21 +19,10 @@
 
     <form id="my-form" action="{% url 'events:signup' event.id %}" method="post">
       {% csrf_token %}
-      <div class="form-group">You can singup for this event.</div>
-      {% for field in form %}
-        <div class="form-group">
-          {{ field.errors }}
-          {{ field.label_tag }} {{ field }}
-          {% if field.help_text %}
-          <p class="help">{{ field.help_text|safe }}</p>
-          {% endif %}
-        </div>
-      {% endfor %}
       <input id="my-form-submit" type="submit" class="btn btn-warning" value="Signup"/>
     </form>
   </div>
 </div>
-{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
   
 {% endblock %}
