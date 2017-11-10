@@ -1,5 +1,10 @@
 a.nav-link {
   font-size: x-large;
+  color: white;
+}
+a.nav-link.active {
+  font-size: x-large;
+  color: white;
 }
 .navbar-text-my {
   font-size: x-large;
@@ -10,7 +15,7 @@ body {
   font-family: 'Montserrat', sans-serif;
 }
 nav {
-  background-color: #fff5af;
+  background-color: #4286f4;
 }
 div.card {
   margin-top: 2rem;

@@ -4,7 +4,7 @@
   {% if all_events %}
     <div class="row">
     {% for event in all_events %}
-      <div class="col-sm-6">
+      <div class="col-sm-6" style="cursor:pointer;" onclick="location.href='{% url 'events:detail' event.id %}'">
         <div class="card text-center" style="max-width: 30rem; max-height:100rem">
           <div class="card-header">
             <h4 class="card-title">{{event.name}}</h4></div>
