@@ -1,3 +1,4 @@
+from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404, render, redirect
@@ -12,7 +13,9 @@ def register(request):
       User.objects.create_user(username=form.cleaned_data['username'],
                   password=form.cleaned_data['password2'],
                   email=form.cleaned_data['email'])
+      messages.success(request, 'You are successfully registered.')
       return redirect('events:events')
+  messages.error(request, 'Error during registration.')
   return render(request, 'accounts/register.html', {'form':form})
 
 def login_view(request):
@@ -26,10 +29,11 @@ def login_view(request):
       user = authenticate(username=username, password=password)
       if user is not None:
         login(request, user)
+        messages.success(request, 'You are successfully logged in.')
         return redirect('events:events')
       else:
-        error_message = "Error"
-  return render(request, 'accounts/login.html', {'form': form, 'error_message': error_message})
+        messages.error(request, 'Error: Username or password are incorrect.')
+  return render(request, 'accounts/login.html', {'form': form})
 
 def logout_view(request):
   logout(request)
