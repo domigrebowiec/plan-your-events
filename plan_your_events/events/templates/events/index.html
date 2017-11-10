@@ -23,7 +23,7 @@
       <div class="collapse navbar-collapse">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
-            <a class="nav-link active" href="{% url 'events:events' %}" onclick="this.">Events</a>
+            <a class="nav-link active" href="{% url 'events:events' %}">Events</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{% url 'events:addnew' %}">Add event</a>
@@ -36,17 +36,17 @@
         <ul class="navbar-nav">
           {% if not user.is_authenticated %}
           <li class="nav-item">
-            <a class="nav-link active" href="{% url 'events:register' %}" onclick="this.">Register</a>
+            <a class="nav-link active" href="{% url 'accounts:register' %}">Register</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'events:login_view' %}">Login</a>
+            <a class="nav-link" href="{% url 'accounts:login_view' %}">Login</a>
           </li>
           {% else %}
           <li class="nav-item">
             <a class="nav-link" href="#">{{user.username}}</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{% url 'events:logout_view' %}">Logout</a>
+            <a class="nav-link" href="{% url 'accounts:logout_view' %}">Logout</a>
           </li>
           {% endif %}
         </ul>

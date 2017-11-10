@@ -1,7 +1,7 @@
 {% extends 'events/index.html' %}
 {% block content %}
-
-<form id="my-form" action="{% url 'events:register' %}" method="post">
+{% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+<form id="my-form" action="{% url 'accounts:login_view' %}" method="post">
   {% csrf_token %}
   {% for field in form %}
     <div class="form-group">
